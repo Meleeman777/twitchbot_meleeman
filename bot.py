@@ -2,24 +2,11 @@ import os
 import json
 import threading
 import requests
-import tokens 
 from datetime import date
 
-
-twitchclient_id=os.environ('TWITCHCLIENT')
-twitchsecret=os.environ('TWITCHSECRET')
-userStream=os.environ('USERSTREAM')
-bot_token=os.environ('BOT_TOKEN')
-bot_chatID_deutsch=os.environ('BOT_CHAT_ID_DEUTSCH')
-bot_chatID_meleeman=os.environ('BOT_CHAT_ID_MELEEMAN')
-bot_chatID_meleerama=os.environ('BOT_CHAT_ID_MELEERAMA')
-#twitchclient_id=tokens.twitchclient_id
-#twitchsecret=tokens.twitchsecret
-#userStream=tokens.userStream
-#bot_token=tokens.bot_token
-#bot_chatID_deutsch=tokens.bot_chatID_deutsch
-#bot_chatID_meleeman=tokens.bot_chatID_meleeman
-#bot_chatID_meleerama=tokens.bot_chatID_meleerama
+twitchclient_id=os.environ["TWITCHCLIENT_ID"]
+twitchsecret=os.environ['TWITCHSECRET']
+bot_token=os.environ['BOT_TOKEN']
 
 def is_TwitchOnline():
     try:
@@ -34,7 +21,7 @@ def is_TwitchOnline():
 
         # Connection to Twitch
         response = requests.get('https://api.twitch.tv/helix/streams?user_login=' + \
-                   userStream, headers={'Authorization': 'Bearer ' + \
+                   "Meleeman777", headers={'Authorization': 'Bearer ' + \
                    OAuth_Token,'Client-Id': twitchclient_id})
         var=json.loads(response.content)
 
@@ -55,7 +42,7 @@ def is_TwitchOnline():
 
         # Twitch var data returns wether the stream just went live
         if var['data'] and boolean_online.upper()=='FALSE':
-            message='Stream of : ['+str(userStream)+'](https://www.twitch.tv/'+str(userStream)+') is online. \n'
+            message='Stream of : ['+str("Meleeman777")+'](https://www.twitch.tv/'+str("Meleeman777")+') is online. \n'
 
 
             telegram_bot_sendtext(message)
@@ -65,7 +52,7 @@ def is_TwitchOnline():
 
         # Twitch var data returns wether the stream just went off-line    
         if not var['data'] and boolean_online.upper()=='TRUE':
-            telegram_bot_sendtext('meleeman777'+' is offline')
+            telegram_bot_sendtext('Meleeman777'+' is offline')
             f = open(filename, "w")
             f.write("FALSE")
             f.close()
@@ -79,7 +66,7 @@ def is_TwitchOnline():
 def telegram_bot_sendtext(bot_message):
    
     send_text = 'https://api.telegram.org/bot' + bot_token + '/sendMessage?chat_id=' + \
-              bot_chatID_meleeman + '&parse_mode=Markdown&text=' + bot_message
+              '-1001379039699'+ '&parse_mode=Markdown&text=' + bot_message
 
     response = requests.get(send_text)
 
@@ -88,10 +75,10 @@ def telegram_bot_sendtext(bot_message):
 
 # 4 Running a check every 30seconds to see whether the Twitch stream is online
 def main():
-    timertime=30
+    timertime=15
     is_TwitchOnline()
    
-    # 30sec timer
+    # 15sec timer
     threading.Timer(timertime, main).start()
 
 # Run the main function
