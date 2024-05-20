@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+secrets.yaml
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -402,3 +402,5 @@ lib/
 include/
 lib/64
 tokens.py
+
+**/telebot
