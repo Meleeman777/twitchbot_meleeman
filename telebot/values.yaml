@@ -1,0 +1,4 @@
+container:
+  image: meleeman777/telebot_main:latest
+
+replicaCount: 1

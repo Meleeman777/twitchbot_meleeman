@@ -1,0 +1,35 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app : {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      project: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        project: {{ .Release.Name }}   # Service will look for those PODS Labels!!!
+    spec:
+      containers:
+        - name : {{ .Release.Name }}-web
+          image: {{ .Values.container.image }}
+          env:
+          - name: TWITCHCLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: credentials
+                key: twitchclient_id
+          - name: TWITCHSECRET
+            valueFrom:
+              secretKeyRef:
+                name: credentials
+                key: twitchsecret
+          - name: BOT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: credentials
+                key: bot_token
